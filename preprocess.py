@@ -28,7 +28,7 @@ data['HR'].fillna(75, inplace=True)    # Normal HR
 data['RR'].fillna(16, inplace=True)    # Normal RR
 data['BT'].fillna(37, inplace=True)    # Normal BT
 data['Saturation'].fillna(98, inplace=True)  # Normal Saturation
-data['NRS_pain'].fillna(0, inplace=True)  # No pain
+data['NRS_pain'].fillna(4, inplace=True)  # No pain
 
 # Making brackets for Age
 def replace_age(row):

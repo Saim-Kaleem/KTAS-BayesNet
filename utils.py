@@ -1,3 +1,73 @@
+import json
+import numpy as np
+from pgmpy.factors.discrete import TabularCPD
+
+def save_cpds(model, filename="cpds.json"):
+    """
+    Save CPDs of a Bayesian Network to a file.
+    
+    Parameters:
+    model: Trained BayesianNetwork object with CPDs
+    filename: Name of the file to save CPDs
+    """
+    cpds_dict = {}
+    for cpd in model.get_cpds():
+        # Convert CPD to dictionary format
+        cpds_dict[cpd.variable] = {
+            "values": cpd.get_values().tolist(),
+            "variables": cpd.variables,
+            "cardinality": cpd.cardinality.tolist(),
+            "state_names": cpd.state_names
+        }
+    
+    # Save to a JSON file
+    with open(filename, "w") as file:
+        json.dump(cpds_dict, file, indent=4)
+    print(f"CPDs saved to {filename}")
+
+def load_cpds(model, filename="cpds.json"):
+    """
+    Load CPDs from a file and add them to the Bayesian Network.
+    
+    Parameters:
+    model: BayesianNetwork object
+    filename: Name of the file containing CPDs
+    """
+    with open(filename, "r") as file:
+        cpds_dict = json.load(file)
+    
+    for var, cpd_data in cpds_dict.items():
+        # Create TabularCPD object
+        cpd = TabularCPD(
+            variable=var,
+            variable_card=len(cpd_data["state_names"][var]),
+            values=np.array(cpd_data["values"]),
+            evidence=cpd_data["variables"][1:],
+            evidence_card=cpd_data["cardinality"][1:],
+            state_names=cpd_data["state_names"]
+        )
+        model.add_cpds(cpd)
+    
+    # Validate the model
+    if model.check_model():
+        print("All CPDs loaded successfully and the model is valid!")
+    else:
+        print("Model validation failed. Check the CPDs.")
+
+def discretize_variables(data):
+    """
+    Convert all variables to string type for pgmpy compatibility
+    since data is already preprocessed and categorized
+    """
+    # Create copy to avoid modifying original data
+    df = data.copy()
+    
+    # Convert all columns to string for pgmpy compatibility
+    for col in df.columns:
+        df[col] = df[col].astype(str)
+    
+    return df
+
 chief_complaint_dict = {
     1: "Cardiac arrest (non-traumatic)",
     2: "Cardiac arrest (traumatic)",

@@ -288,6 +288,7 @@ def main():
         # Example prediction
         print("\nMaking sample prediction...")
         sample_patient = test_data_discrete.iloc[0].drop('KTAS_expert').to_dict()
+        print("Patient data:", sample_patient)
         pred_probs, pred_dist = predict_ktas(trained_model, sample_patient)
         print("Prediction probabilities:", pred_probs)
         print("Actual KTAS:", test_data_discrete.iloc[0]['KTAS_expert'])

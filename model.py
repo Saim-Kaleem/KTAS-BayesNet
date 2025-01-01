@@ -45,23 +45,28 @@ def main():
     # Initialize the PGM with layout parameters
     pgm = PGM(aspect=1.5, node_unit=1.5)
 
-    # Add nodes
-    pgm.add_node("Sex", "Sex", 0, 4)
-    pgm.add_node("Age", "Age", 1, 4)
-    pgm.add_node("Arrival mode", "Arrival Mode", 2, 4)
-    pgm.add_node("Injury", "Injury", 1, 3)
-    pgm.add_node("Pain", "Pain", 1, 2)
-    pgm.add_node("Mental", "Mental", 2, 2)
-    pgm.add_node("NRS_pain", "NRS Pain", 0, 1)
-    pgm.add_node("Complain index", "Complain Index", 2, 1)
-    pgm.add_node("HR", "Heart Rate", 3, 3)
-    pgm.add_node("RR", "Respiratory Rate", 3, 2)
-    pgm.add_node("BP", "Blood Pressure", 2, 3)
-    pgm.add_node("BT", "Body Temp", 4, 3)
-    pgm.add_node("Saturation", "Saturation", 4, 2)
+    # Add nodes (hierarchical order with increased spacing)
+    pgm.add_node("Sex", "Sex", 0, 6)
+    pgm.add_node("Age", "Age", 3, 6)
+    pgm.add_node("Arrival mode", "Arrival Mode", 6, 6)
+
+    pgm.add_node("Injury", "Injury", 3, 5)
+    pgm.add_node("Pain", "Pain", 4, 4)
+
+    pgm.add_node("Mental", "Mental", 1, 3)
+    pgm.add_node("NRS_pain", "NRS Pain", 3, 3)
+
+    pgm.add_node("Complain index", "Complain Index", 1, 2)
+
+    pgm.add_node("HR", "Heart Rate", 0, 4)
+    pgm.add_node("RR", "Respiratory Rate", 2, 4)
+    pgm.add_node("BP", "Blood Pressure", 5, 5)
+    pgm.add_node("BT", "Body Temp", 6, 4)
+    pgm.add_node("Saturation", "Saturation", 6, 3)
+
     pgm.add_node("KTAS_expert", "KTAS Expert", 3, 1)
 
-    # Add edges
+    # Add edges (same as before)
     pgm.add_edge("Sex", "Pain")
     pgm.add_edge("Age", "Pain")
     pgm.add_edge("Age", "BP")
@@ -91,8 +96,8 @@ def main():
 
     # Render and save the PGM
     pgm.render()
-    pgm.figure.savefig("bayesian_network_daft.png")
-    print("Graph saved as 'bayesian_network_daft.png'.")
+    pgm.figure.savefig("bayesian_network_daft_hierarchical.png")
+    print("Graph saved as 'bayesian_network_daft_hierarchical.png'.")
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,7 @@
 from model import model
 from utils import discretize_variables, load_cpds
 from pgmpy.inference import VariableElimination
+from pgmpy.estimators import BicScore, BDeuScore, K2Score
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -189,6 +190,31 @@ def analyze_errors(model, test_data, metrics):
     
     return errors
 
+def evaluate_structure(model, data):
+    """
+    Evaluate the structure of the Bayesian Network
+    
+    Parameters:
+    model: BayesianNetwork object
+    data: Dataset to evaluate
+    
+    Returns:
+    dict: Dictionary containing various structure evaluation metrics
+    """
+    bic = BicScore(data)
+    bdeu = BDeuScore(data)
+    k2 = K2Score(data)
+    
+    bic_score = bic.score(model)
+    bdeu_score = bdeu.score(model)
+    k2_score = k2.score(model)
+    
+    return {
+        'bic_score': bic_score,
+        'bdeu_score': bdeu_score,
+        'k2_score': k2_score
+    }
+
 def predict_ktas(model, patient_data):
     """
     Predict KTAS level for a given patient
@@ -284,6 +310,12 @@ def main():
 
         # Analyze errors
         error_analysis = analyze_errors(trained_model, test_data_discrete, metrics)
+
+        # Evaluate the structure of the model
+        print("\nEvaluating model structure...")
+        structure_metrics = evaluate_structure(trained_model, train_data_discrete)
+        print("Structure Evaluation Metrics:")
+        print(structure_metrics)
         
         # Example prediction
         print("\nMaking sample prediction...")

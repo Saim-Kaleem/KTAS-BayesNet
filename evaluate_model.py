@@ -2,7 +2,11 @@ from model import model
 from utils import discretize_variables, load_cpds
 from pgmpy.inference import VariableElimination
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, precision_recall_fscore_support
 
 def predict_ktas(model, patient_data):
     """
@@ -25,46 +29,141 @@ def predict_ktas(model, patient_data):
     
     return result.values, result
 
-def evaluate_model(model, test_data):
+def evaluate_model(model, test_data, plot_confusion=True):
     """
-    Evaluate the model's performance on test data
+    Comprehensive evaluation of the Bayesian Network model
     
     Parameters:
     model: Trained BayesianNetwork object
-    test_data (pandas.DataFrame): Test dataset
+    test_data: Test dataset
+    plot_confusion: Whether to plot confusion matrix
     
     Returns:
-    accuracy: Overall prediction accuracy
+    dict: Dictionary containing various evaluation metrics
+    """
+    from pgmpy.inference import VariableElimination
+    inference = VariableElimination(model)
+    
+    # Lists to store actual and predicted values
+    y_true = []
+    y_pred = []
+    probabilities = []
+    
+    # Get predictions for all test cases
+    for idx, row in test_data.iterrows():
+        # Get actual KTAS level
+        actual = row['KTAS_expert']
+        y_true.append(actual)
+        
+        # Make prediction
+        evidence = row.drop('KTAS_expert').to_dict()
+        result = inference.query(variables=['KTAS_expert'], evidence=evidence)
+        
+        # Get predicted class and probability
+        pred_class = max(result.values.items(), key=lambda x: x[1])[0]
+        pred_prob = max(result.values.items(), key=lambda x: x[1])[1]
+        
+        y_pred.append(pred_class)
+        probabilities.append(pred_prob)
+    
+    # Calculate metrics
+    accuracy = accuracy_score(y_true, y_pred)
+    conf_matrix = confusion_matrix(y_true, y_pred)
+    class_report = classification_report(y_true, y_pred, output_dict=True)
+    
+    # Calculate precision, recall, and F1 score for each class
+    precision, recall, f1, support = precision_recall_fscore_support(y_true, y_pred)
+    
+    # Plot confusion matrix if requested
+    if plot_confusion:
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+        plt.title('Confusion Matrix')
+        plt.ylabel('True Label')
+        plt.xlabel('Predicted Label')
+        plt.show()
+    
+    # Calculate confidence of predictions
+    mean_confidence = np.mean(probabilities)
+    confidence_std = np.std(probabilities)
+    
+    # Prepare detailed metrics dictionary
+    metrics = {
+        'accuracy': accuracy,
+        'confusion_matrix': conf_matrix,
+        'classification_report': class_report,
+        'class_metrics': {
+            'precision': precision.tolist(),
+            'recall': recall.tolist(),
+            'f1': f1.tolist(),
+            'support': support.tolist()
+        },
+        'prediction_confidence': {
+            'mean': mean_confidence,
+            'std': confidence_std
+        }
+    }
+    
+    # Print summary metrics
+    print("\nModel Evaluation Metrics:")
+    print(f"Accuracy: {accuracy:.4f}")
+    print(f"\nMean Prediction Confidence: {mean_confidence:.4f} (±{confidence_std:.4f})")
+    print("\nClassification Report:")
+    print(classification_report(y_true, y_pred))
+    
+    # Calculate per-class accuracy
+    per_class_accuracy = conf_matrix.diagonal() / conf_matrix.sum(axis=1)
+    print("\nPer-class Accuracy:")
+    for i, acc in enumerate(per_class_accuracy):
+        print(f"Class {i}: {acc:.4f}")
+    
+    return metrics
+
+def analyze_errors(model, test_data, metrics):
+    """
+    Analyze prediction errors in detail
+    
+    Parameters:
+    model: Trained BayesianNetwork object
+    test_data: Test dataset
+    metrics: Metrics dictionary from evaluate_model
     """
     inference = VariableElimination(model)
-    correct = 0
-    total = len(test_data)
     
+    # Get misclassified cases
+    errors = []
     for idx, row in test_data.iterrows():
-        try:
-            # Prepare evidence dictionary and convert values to match model states
-            evidence = row.drop('KTAS_expert').to_dict()
-            evidence = {key: int(value) if isinstance(value, float) else value for key, value in evidence.items()}
-            
-            # Get prediction
-            result = inference.query(variables=['KTAS_expert'], evidence=evidence)
-            
-            # Access probabilities from the result
-            probabilities = result.values  # NumPy array with probabilities
-            
-            # Find the predicted class (index + 1 corresponds to KTAS_expert levels)
-            predicted_ktas = probabilities.argmax() + 1
-            
-            # Check if the prediction matches the actual value
-            if predicted_ktas == row['KTAS_expert']:
-                correct += 1
+        actual = row['KTAS_expert']
+        evidence = row.drop('KTAS_expert').to_dict()
+        result = inference.query(variables=['KTAS_expert'], evidence=evidence)
+        pred_class = max(result.values.items(), key=lambda x: x[1])[0]
         
-        except KeyError as e:
-            print(f"KeyError at iteration {idx}: {e}")
-            print(f"Evidence: {evidence}")
-            continue  # Skip the problematic row and continue
+        if actual != pred_class:
+            errors.append({
+                'index': idx,
+                'actual': actual,
+                'predicted': pred_class,
+                'confidence': max(result.values.items(), key=lambda x: x[1])[1],
+                'features': evidence
+            })
     
-    return correct / total
+    # Print error analysis
+    print("\nError Analysis:")
+    print(f"Total errors: {len(errors)}")
+    
+    # Analyze common error patterns
+    error_patterns = {}
+    for error in errors:
+        pattern = (error['actual'], error['predicted'])
+        if pattern not in error_patterns:
+            error_patterns[pattern] = 0
+        error_patterns[pattern] += 1
+    
+    print("\nCommon Error Patterns (actual -> predicted):")
+    for pattern, count in sorted(error_patterns.items(), key=lambda x: x[1], reverse=True):
+        print(f"KTAS {pattern[0]} -> KTAS {pattern[1]}: {count} cases")
+    
+    return errors
 
 def main():
     # Load the dataset
@@ -105,19 +204,20 @@ def main():
         if trained_model.check_model():
             print("Model validation passed")
         
-        for cpd in model.get_cpds():
+        '''for cpd in model.get_cpds():
             print(f"\nCPD for {cpd.variable}:")
-            print(cpd)
+            print(cpd)'''
 
         # Evaluate the model on training data
         print("\nEvaluating model performance on training data...")
-        accuracy = evaluate_model(trained_model, train_data_discrete)
-        print(f"Model accuracy on training set: {accuracy:.2%}")
+        metrics = evaluate_model(trained_model, train_data_discrete)
         
         # Evaluate the model on test data
         print("\nEvaluating model performance...")
-        accuracy = evaluate_model(trained_model, test_data_discrete)
-        print(f"Model accuracy on test set: {accuracy:.2%}")
+        metrics = evaluate_model(trained_model, test_data_discrete)
+
+        # Analyze errors
+        error_analysis = analyze_errors(trained_model, test_data_discrete, metrics)
         
         # Example prediction
         print("\nMaking sample prediction...")

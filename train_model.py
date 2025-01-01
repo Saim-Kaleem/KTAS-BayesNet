@@ -50,7 +50,7 @@ def main():
     print(data.dtypes)
     
     # Split data into train and test sets
-    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
+    train_data, test_data = train_test_split(data, test_size=0.2)
     
     # Discretize both datasets
     print("\nPreprocessing data...")

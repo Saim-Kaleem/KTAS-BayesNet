@@ -14,6 +14,9 @@ def merge_files(xlsx_file, csv_file, output_file):
         third_column = xlsx_df.iloc[:, 2]
         print(f"Extracted 3rd column from .xlsx file: {third_column}")
 
+        # replace rows with no values with 0
+        third_column.fillna(0, inplace=True)
+
         # Add the 3rd column by the name 'Complain index' after 'Chief_complain' column in .csv DataFrame
         csv_df.insert(csv_df.columns.get_loc('Chief_complain') + 1, 'Complain index', third_column)
 

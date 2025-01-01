@@ -227,8 +227,28 @@ def main():
     print("\nInitial data types:")
     print(data.dtypes)
     
-    # Split data into train and test sets
-    train_data, test_data = train_test_split(data, test_size=0.2)
+    # Identify unique `Complain index` classes
+    unique_classes = data['Complain index'].value_counts()
+    unique_classes = unique_classes[unique_classes == 1].index
+
+    # Separate unique classes and the rest of the data
+    unique_data = data[data['Complain index'].isin(unique_classes)]
+    rest_data = data[~data['Complain index'].isin(unique_classes)]
+
+    print(f"Unique classes moved to training set: {len(unique_data)} samples")
+
+    # Perform stratified split on the rest of the data
+    train_data, test_data = train_test_split(
+        rest_data, 
+        test_size=0.2, 
+        stratify=rest_data['Complain index'], 
+        random_state=42
+    )
+    
+    # Add unique examples to the training set
+    train_data = pd.concat([train_data, unique_data], ignore_index=True)
+
+    print(f"Final Train samples: {len(train_data)}, Test samples: {len(test_data)}")
     
     # Discretize both datasets
     print("\nPreprocessing data...")

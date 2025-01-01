@@ -15,7 +15,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,2,9,2,0,abd pain,35.0,0,1,1,1,3,2,1,2,Acute peritonitis,4
 1,2,4,2,0,headache,70.0,0,1,1,2,4,2,3,2,Infective endocarditis,4
 0,3,12,3,0,headache,70.0,0,1,1,3,3,2,1,2,"Subarachnoid haemorrhage, unspecified",4
-1,3,11,1,0,??,,0,1,2,1,3,2,2,2,Acute gastroenteritis,4
+1,3,11,1,0,??,0.0,0,1,2,1,3,2,2,2,Acute gastroenteritis,4
 1,2,12,1,1,Open Wound,122.0,0,1,2,2,3,2,1,2,"Open wound of other parts of head, face",3
 0,1,10,2,0,RUQ pain,35.0,0,1,2,0,3,2,1,2,Hepatitis NOS,3
 1,1,3,1,0,Gingival swelling,18.0,0,1,2,2,4,2,2,2,Odontogenic infection,4
@@ -33,11 +33,11 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,3,12,5,0,vomiting,41.0,0,0,2,2,3,2,1,2,Vomiting,4
 0,3,8,2,0,palpitation,4.0,0,1,2,0,6,2,2,2,Paroxysmal supraventricular tachycardia,3
 1,1,7,1,0,syncope,7.0,0,0,2,3,3,2,1,2,Syncope,3
-0,1,11,1,0,??,,0,0,2,0,3,2,2,2,Acute gastritis,4
+0,1,11,1,0,??,0.0,0,0,2,0,3,2,2,2,Acute gastritis,4
 0,1,3,2,0,hematochezia,44.0,0,0,2,2,3,2,2,2,"Gastrointestinal haemorrhage, unspecified",3
 0,1,4,1,1,"injury, finger",102.0,0,0,2,3,3,2,1,2,Laceration of finger with nail damage,4
 0,1,6,2,0,syncope,7.0,0,0,2,3,3,2,2,2,Syncope,4
-1,2,10,1,1,??,,0,0,2,3,3,2,2,2,Laceration of oral cavity,4
+1,2,10,1,1,??,0.0,0,0,2,3,3,2,2,2,Laceration of oral cavity,4
 0,2,8,2,0,hyperventilation,115.0,0,0,2,4,3,2,2,2,Panic attack,4
 0,4,9,1,0,involuntary movt.,74.0,0,0,2,3,3,2,1,2,Abnormal involuntary movement,4
 0,1,9,2,0,Urticarial rash,126.0,0,0,2,3,4,2,1,2,Acute urticaria,5
@@ -64,7 +64,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,1,8,2,0,vomiting,41.0,0,1,1,4,3,2,2,2,Acute gastroenteritis,3
 1,1,10,2,1,lip laceration,19.0,0,1,1,2,3,2,1,2,Laceration of oral cavity,4
 0,2,10,2,0,ant. chest pain,3.0,0,1,1,2,4,2,1,2,Ischaemic chest pain,2
-0,3,10,2,0,?? ??,,0,1,1,3,3,2,2,2,Hyperventilation,4
+0,3,10,2,0,?? ??,0.0,0,1,1,3,3,2,2,2,Hyperventilation,4
 0,1,5,3,0,right lower quadrant abdominal pain,35.0,0,1,1,2,3,2,2,2,"Benign neoplasm of ovary, right",3
 0,4,6,3,0,right hemiparesis,75.0,0,1,1,3,3,2,1,2,Cerebral infarction due to thrombosis of middle cerebral artery,2
 1,3,4,2,0,"leg pain, Lt.",101.0,0,1,2,3,4,2,2,2,Herniated disc disease of lumbar spine,4
@@ -121,8 +121,8 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,2,7,2,0,HA,70.0,0,1,3,3,1,2,2,2,Headache,2
 1,4,10,1,0,vomiting,41.0,1,0,2,2,2,2,1,2,Acute gastroenteritis,3
 1,2,5,1,0,dyspnea,112.0,0,0,2,0,3,2,2,2,Dyspnea,1
-0,2,9,2,0,"Blood Pressure, Low",,2,0,2,0,0,4,2,2,Colitis,1
-0,2,9,2,0,"Blood Pressure, Low",,2,0,2,0,0,4,2,2,Hypotension,1
+0,2,9,2,0,"Blood Pressure, Low",0.0,2,0,2,0,0,4,2,2,Colitis,1
+0,2,9,2,0,"Blood Pressure, Low",0.0,2,0,2,0,0,4,2,2,Hypotension,1
 0,4,12,1,0,syncope,7.0,0,0,2,3,3,2,2,2,"Compression fracture of lumbar spine L1, closed",3
 1,3,6,0,0,general weakness,6.0,0,0,2,4,3,2,2,2,Dizziness,2
 0,1,9,2,0,dyspnea,112.0,0,0,2,2,3,2,2,2,Chronic urticaria,3
@@ -148,7 +148,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,1,12,4,1,Suicidal Attempt,59.0,0,0,2,3,3,2,2,2,Suicide tendency,2
 0,2,3,2,0,chest palpitation,4.0,0,0,2,2,3,2,1,2,Panic attack,3
 1,2,7,2,0,general weakness,6.0,0,0,2,2,3,2,1,2,Unspecified abdominal pain,3
-1,3,6,3,0,AVF site bleeding,,1,0,2,0,3,2,1,2,"Chronic kidney disease, unspecified",2
+1,3,6,3,0,AVF site bleeding,0.0,1,0,2,0,3,2,1,2,"Chronic kidney disease, unspecified",2
 1,3,4,2,0,mental change,68.0,2,0,2,0,3,2,2,2,End stage kidney disease on dialysis,1
 1,2,7,3,0,dyspnea,112.0,1,0,2,0,3,2,1,2,"Hydrocephalus, unspecified",2
 1,2,9,3,0,mental change,68.0,2,0,2,0,5,3,1,1,"Encephalopathy, unspecified",2
@@ -181,15 +181,15 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,2,12,2,0,"arm pain, Rt",100.0,0,1,3,3,3,2,2,2,Complex regional pain syndrome type II,4
 1,1,17,2,0,"erection, penile",52.0,0,0,2,0,3,2,2,2,Priapism,2
 1,2,3,1,0,melena,44.0,1,0,2,0,3,2,1,2,"Gastrointestinal haemorrhage, unspecified",2
-1,3,10,1,0,dysarthria,,1,0,2,3,3,2,2,2,Cerebral infarction due to unspecified occlusion or stenosis of middle cerebral artery,3
+1,3,10,1,0,dysarthria,0.0,1,0,2,3,3,2,2,2,Cerebral infarction due to unspecified occlusion or stenosis of middle cerebral artery,3
 0,1,6,3,0,PPROM,83.0,0,0,2,2,3,2,2,2,"Preterm labour without delivery, 22 weeks or more and less than 34weeks pregnant",3
 1,2,8,2,0,dyspnea,112.0,0,0,2,2,0,2,1,2,"Atrioventricular block, complete",2
 1,3,12,2,0,Facial Palsy,19.0,0,0,2,0,3,2,2,2,Facial palsy,3
 1,2,11,0,0,Urticarial rash,126.0,0,1,1,4,3,2,2,2,Allergic urticaria,5
 1,2,6,2,1,FB in eye,88.0,0,1,1,4,2,2,1,2,Foreign body in eye,5
 0,3,6,1,0,abdomen discomfort,35.0,0,1,1,3,4,2,2,2,Functional gastrointestinal disorder,4
-0,3,15,2,1,?? ??? ??,,0,1,1,2,3,2,1,2,Dislocation of jaw,5
-0,3,6,1,0,??,,0,1,1,0,3,2,1,2,Chest pain,2
+0,3,15,2,1,?? ??? ??,0.0,0,1,1,2,3,2,1,2,Dislocation of jaw,5
+0,3,6,1,0,??,0.0,0,1,1,0,3,2,1,2,Chest pain,2
 1,1,6,2,1,Open Wound,122.0,0,1,1,0,3,2,1,2,"Open wound of other parts of head, face",4
 0,1,5,2,0,hand tingling sense,76.0,0,1,1,4,3,2,2,2,Injury of finger,5
 1,1,2,0,0,Dislocation of Jaw,19.0,0,1,1,2,3,2,1,2,Dislocation of jaw,4
@@ -225,8 +225,8 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,2,13,2,0,fever,146.0,0,1,1,3,3,2,2,2,Fever,4
 0,3,5,2,0,for A/tapping,47.0,0,1,1,2,3,2,2,2,Liver cirrhosis Child-Pugh A,4
 0,2,6,2,0,"Discomfort, Chest",3.0,0,1,1,2,3,2,2,2,Sprain and strain of rib,4
-1,2,12,2,0,?? ??,,0,1,1,2,5,2,1,2,Epigastric pain,4
-0,2,7,1,0,??? ??,,1,1,1,1,3,2,1,2,Constipation,4
+1,2,12,2,0,?? ??,0.0,0,1,1,2,5,2,1,2,Epigastric pain,4
+0,2,7,1,0,??? ??,0.0,1,1,1,1,3,2,1,2,Constipation,4
 1,3,3,1,0,HA,70.0,0,1,1,2,3,2,2,2,Headache,4
 1,3,11,2,0,headache,70.0,0,1,1,2,3,2,2,2,Headache,3
 0,1,9,2,0,acute epigastric pain,35.0,0,1,1,2,2,2,1,2,Acute gastritis,4
@@ -276,7 +276,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,1,10,2,0,abdomen pain,35.0,0,1,1,2,3,2,1,2,Acute gastroenteritis,4
 1,1,1,2,1,Open Wound,122.0,0,1,1,0,3,2,1,2,"Open wound of other parts of head, face",4
 1,1,7,2,0,anxiety,60.0,0,1,1,3,3,2,2,2,Anxiety disorder,4
-1,1,10,2,0,?? ???,,0,1,1,4,4,2,2,2,Nausea,4
+1,1,10,2,0,?? ???,0.0,0,1,1,4,4,2,2,2,Nausea,4
 0,1,11,2,0,myalgia,6.0,0,1,1,2,4,2,2,2,Acute tonsillitis not specified as recurrent,5
 0,1,9,2,0,headache,70.0,0,1,1,0,3,2,2,2,Acute gastroenteritis,4
 1,1,9,0,0,headache,70.0,0,1,1,2,3,2,2,2,Headache,4
@@ -377,7 +377,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,2,9,2,1,left eye pain,90.0,0,1,1,2,3,2,2,2,Corneal abrasion,4
 1,2,5,2,0,Rt hemiparesis,75.0,0,1,1,3,3,2,1,2,Cerebral infarction due to thrombosis of basilar artery,3
 0,2,12,2,1,ant. chest pain,3.0,0,1,1,0,3,2,1,2,Contusion of front wall of thorax,4
-0,2,5,2,0,????,,0,1,1,0,4,2,2,2,Rash,5
+0,2,5,2,0,????,0.0,0,1,1,0,4,2,2,2,Rash,5
 0,2,3,2,0,ant. chest pain,3.0,0,1,1,3,3,2,2,2,"Pneumonia, unspecified",2
 1,2,4,2,0,dyspnea,112.0,0,1,1,0,3,2,1,2,"Atrial fibrillation and atrial flutter, unspecified",2
 1,2,4,2,0,"abdominal pain, Rt",35.0,0,1,1,0,3,2,1,2,"Gallstone(impacted) of gallbladder with cholecystitis (chronic), With obstruction",4
@@ -387,7 +387,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,3,9,2,0,Abd. pain,35.0,0,1,1,2,3,2,1,2,Unspecified abdominal pain,4
 0,3,8,1,0,ant. chest pain,3.0,0,1,1,0,3,2,1,2,Ischaemic chest pain,2
 1,3,9,2,0,VOIDING PAIN,55.0,0,1,1,2,3,2,2,2,Acute urinary retension,4
-0,3,6,2,0,???,,0,1,1,1,3,2,2,2,Acute gastroenteritis,4
+0,3,6,2,0,???,0.0,0,1,1,1,3,2,2,2,Acute gastroenteritis,4
 1,3,8,2,0,LOC - Loss of consciousness,67.0,0,1,1,2,3,2,2,2,Dizziness and giddiness,3
 1,3,7,2,0,ant. chest pain,3.0,0,1,1,2,3,2,1,2,Other chest pain,2
 0,3,12,2,0,RLQ pain,35.0,0,1,1,2,3,2,1,2,"Acute appendicitis, other and unspecified",4
@@ -399,7 +399,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,3,5,2,0,abd pain,35.0,0,1,1,1,3,2,2,2,Acute gastroenteritis,4
 0,3,3,2,0,diarrhea,38.0,0,1,1,3,3,2,1,2,Acute watery diarrhoea,4
 0,3,4,0,0,ant. chest pain,3.0,0,1,1,3,3,2,2,2,Ischaemic chest pain,2
-1,3,11,2,0,??? ? ???,,0,1,1,2,3,2,2,2,Benign prostatic hyperplasia with obstruction,4
+1,3,11,2,0,??? ? ???,0.0,0,1,1,2,3,2,2,2,Benign prostatic hyperplasia with obstruction,4
 1,3,7,2,0,abd pain,35.0,0,1,1,3,3,2,1,2,Observation for suspected malignant neoplasm,4
 0,3,6,3,0,ant. chest pain,3.0,0,1,1,0,2,2,2,2,"Atrial fibrillation and atrial flutter, unspecified",2
 1,3,15,3,0,ant. chest pain,3.0,0,1,1,2,3,2,1,2,"Acute myocardial infarction, unspecified",2
@@ -540,7 +540,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,3,6,2,1,"shoulder pain, Lt",100.0,0,1,2,2,3,2,1,2,Injury of arm,4
 1,3,8,2,1,right leg injury,103.0,0,1,2,2,3,2,2,2,Multiple abrasion,4
 0,3,5,1,0,Abd. pain,35.0,0,1,2,1,3,2,1,2,"Acute renal failure, unspecified",3
-0,3,9,0,0,????,,0,1,2,3,3,2,1,2,Herpes zoster,4
+0,3,9,0,0,????,0.0,0,1,2,3,3,2,1,2,Herpes zoster,4
 0,3,5,2,0,"leg swelling, Lt.",9.0,0,1,2,3,4,2,2,2,"Lymphedema, lower limb",4
 0,3,8,3,0,"abdominal pain, periumbilical area",35.0,0,1,2,0,3,2,2,2,Intussusception,3
 1,3,6,2,0,"ocular pain, Lt.",90.0,0,1,2,2,3,2,1,2,Corneal abrasion,4
@@ -792,7 +792,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,2,7,1,0,post seizure,67.0,1,0,2,4,4,2,1,2,Seizure,2
 1,2,6,2,0,"Retention, Bladder",54.0,0,0,2,3,3,2,2,2,Urinary retension,4
 1,2,9,0,0,Free voiding,160.0,0,0,2,2,3,2,2,2,Other urinary difficulty,4
-1,2,3,2,0,??? ??,,0,0,2,3,4,2,2,2,Benign prostatic hyperplasia,4
+1,2,3,2,0,??? ??,0.0,0,0,2,3,4,2,2,2,Benign prostatic hyperplasia,4
 1,2,9,1,1,facial injury,19.0,0,0,2,2,3,2,1,2,Head trauma,4
 0,3,9,0,0,Amnesia,67.0,0,0,2,4,3,2,2,2,Amnesia,3
 0,3,5,1,0,dyspnea,112.0,0,0,2,2,3,2,2,2,"Edema, generalized",3
@@ -835,7 +835,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,1,9,0,0,po medication,160.0,0,0,2,0,3,2,1,2,Acute urticaria,5
 1,1,7,2,0,fever,146.0,0,0,2,2,4,2,4,2,"Fever, unspecified",4
 0,1,4,2,0,both hand numbness,76.0,0,0,2,1,3,3,1,2,Hyperventilation,4
-1,1,8,2,0,??? ??? ??,,0,0,2,2,3,2,1,2,Schizophrenia,4
+1,1,8,2,0,??? ??? ??,0.0,0,0,2,2,3,2,1,2,Schizophrenia,4
 0,1,6,2,1,finger laceration,122.0,0,0,2,2,3,2,1,2,Laceration of finger without nail damage,4
 0,1,3,2,1,Sexual Abuse of Adult,80.0,0,0,2,2,4,2,2,2,Sexual abuse,3
 1,1,8,2,1,"DI, drug intoxication",136.0,1,0,2,0,3,2,2,2,Poisoning by benzodiazepine,2
@@ -843,7 +843,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,1,12,2,0,skin rash,126.0,0,0,2,0,3,2,2,2,Rash and other nonspecific skin eruption,4
 1,1,5,3,0,hematemesis,43.0,0,0,2,0,3,2,2,2,Mallory - Weiss syndrome,3
 0,1,10,2,0,"bleeding, gingival",18.0,0,0,2,3,3,2,2,2,Gingival hemorrhage,4
-0,1,13,2,0,????,,0,0,2,0,3,2,2,2,Palpitation,4
+0,1,13,2,0,????,0.0,0,0,2,0,3,2,2,2,Palpitation,4
 1,1,10,1,0,mental change,67.0,2,0,2,0,3,3,3,0,Stupor,2
 1,1,8,2,1,"laceration, scalp",122.0,0,0,2,3,3,2,2,2,Laceration of scalp,4
 1,1,11,1,1,nasal injury,29.0,0,0,2,2,3,2,1,2,Fracture of nasal bone closed,4
@@ -903,7 +903,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,1,8,2,0,dyspnea,112.0,0,0,2,2,3,3,1,2,Dyspnoea,3
 0,1,9,2,1,vaginal bleeding,81.0,0,0,2,1,2,2,2,2,Threatened abortion,3
 0,1,4,3,0,abd pain,35.0,0,0,2,1,4,2,3,2,Abdominal pain,3
-1,1,9,2,0,????,,0,0,2,3,3,3,1,2,Dizziness,3
+1,1,9,2,0,????,0.0,0,0,2,3,3,3,1,2,Dizziness,3
 0,1,8,2,0,dizziness,69.0,0,0,2,3,3,2,1,2,Dizziness and giddiness,3
 0,1,8,2,0,headache,70.0,0,0,2,0,3,2,1,2,Headache,4
 0,1,4,1,1,face laceration,19.0,1,0,2,3,4,2,1,2,Laceration of face,4
@@ -926,13 +926,13 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 1,1,9,2,1,forehead laceration,122.0,0,0,2,1,3,2,1,2,Laceration of face,4
 0,1,4,1,0,left side weakness,75.0,0,0,2,0,3,2,2,2,Muscle weakness other,2
 1,1,6,1,0,epistaxis,25.0,1,0,2,0,3,2,2,2,Head trauma,4
-1,1,11,2,0,??,,0,0,2,2,3,2,2,2,Ureter stone,4
+1,1,11,2,0,??,0.0,0,0,2,2,3,2,2,2,Ureter stone,4
 0,1,8,2,0,Facial Palsy,75.0,0,0,2,3,3,2,1,2,Bell's palsy,3
 1,1,9,2,1,right ocular pain,90.0,0,0,2,2,3,2,1,2,Corneal abrasion,4
 1,1,5,3,0,hematemesis,43.0,0,0,2,3,3,2,2,2,"Gastrointestinal haemorrhage, unspecified",3
 1,1,4,1,0,mental change,67.0,1,0,2,3,3,3,2,2,Intracerebral haemorrhage in thalamus,2
 1,1,4,0,0,LOC,7.0,0,0,2,0,3,2,1,2,Syncope,3
-1,1,4,2,0,??? ??,,0,0,2,2,2,2,1,2,Paresthesia,3
+1,1,4,2,0,??? ??,0.0,0,0,2,2,2,2,1,2,Paresthesia,3
 0,1,4,2,0,dizziness,69.0,0,0,2,3,3,2,2,2,Benign paroxysmal positional vertigo,3
 0,1,4,2,1,skin defect,127.0,0,0,2,3,4,2,1,2,"Amputation of hand and wrist, traumatic",4
 0,1,2,2,0,skin eruption,126.0,0,0,2,0,4,2,2,2,Rash and other nonspecific skin eruption,4
@@ -960,7 +960,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,2,3,2,0,ant. chest pain,3.0,0,0,2,0,3,2,1,2,Ischaemic chest pain,4
 1,2,7,2,1,eyelid laceration,122.0,0,0,2,2,4,2,1,2,Laceration of face,4
 0,2,5,2,0,Urticarial rash,126.0,0,0,2,3,3,3,2,2,Dyspnea,3
-0,2,7,2,0,???,,0,0,2,3,2,2,2,2,Depression,3
+0,2,7,2,0,???,0.0,0,0,2,3,2,2,2,2,Depression,3
 1,2,9,2,1,skin defect,127.0,0,0,2,3,3,2,1,2,Injury of face,4
 0,2,9,2,0,vaginal bleeding,81.0,0,0,2,3,3,2,1,2,Other specified abnormal uterine and vaginal bleeding,3
 1,2,7,2,0,chest palpitation,4.0,0,0,2,0,4,2,1,2,Supraventricular tachycardia,4
@@ -1184,7 +1184,7 @@ Sex,Age,Patients number per hour,Arrival mode,Injury,Chief_complain,Complain ind
 0,4,2,3,0,dyspnea,112.0,2,0,2,0,3,3,1,1,Dyspnoea,3
 1,4,6,2,0,Low abd. pain,35.0,0,0,2,2,3,2,2,2,Hyperplasia of prostate with obstruction,4
 0,4,5,1,0,nasal bleeding,25.0,0,0,2,2,3,2,1,2,Epistaxis,4
-0,4,8,2,0,?? ???,,0,0,2,1,3,2,1,2,"Atherosclerosis obliterans, limb",2
+0,4,8,2,0,?? ???,0.0,0,0,2,1,3,2,1,2,"Atherosclerosis obliterans, limb",2
 0,4,6,5,0,perm cath. malfunction,154.0,0,0,2,2,3,2,1,2,Percutaneous catheter problem,4
 1,4,12,1,1,syncope,7.0,0,0,2,0,3,2,1,2,Communicationg hydrocephalus,3
 0,4,7,3,0,fever,146.0,0,0,2,3,3,2,3,2,"Fever, unspecified",4

@@ -8,27 +8,6 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, precision_recall_fscore_support
 
-def predict_ktas(model, patient_data):
-    """
-    Predict KTAS level for a given patient
-    
-    Parameters:
-    model: Trained BayesianNetwork object
-    patient_data (dict): Dictionary containing patient information
-    
-    Returns:
-    predicted_ktas: Most likely KTAS level
-    probabilities: Probability distribution over KTAS levels
-    """
-    # Create inference object
-    inference = VariableElimination(model)
-    
-    # Predict KTAS
-    result = inference.query(variables=['KTAS_expert'], 
-                           evidence=patient_data)
-    
-    return result.values, result
-
 def evaluate_model(model, test_data, plot_confusion=True):
     """
     Comprehensive evaluation of the Bayesian Network model
@@ -48,23 +27,34 @@ def evaluate_model(model, test_data, plot_confusion=True):
     y_true = []
     y_pred = []
     probabilities = []
+    skipped_count = 0
     
     # Get predictions for all test cases
     for idx, row in test_data.iterrows():
-        # Get actual KTAS level
-        actual = row['KTAS_expert']
-        y_true.append(actual)
-        
-        # Make prediction
-        evidence = row.drop('KTAS_expert').to_dict()
-        result = inference.query(variables=['KTAS_expert'], evidence=evidence)
-        
-        # Get predicted class and probability
-        pred_class = max(result.values.items(), key=lambda x: x[1])[0]
-        pred_prob = max(result.values.items(), key=lambda x: x[1])[1]
-        
-        y_pred.append(pred_class)
-        probabilities.append(pred_prob)
+        try:
+            # Make prediction first
+            evidence = row.drop('KTAS_expert').to_dict()
+            result = inference.query(variables=['KTAS_expert'], evidence=evidence)
+            
+            # If prediction succeeds, then add both actual and predicted values
+            pred_class = np.argmax(result.values) + 1
+            pred_prob = result.values[pred_class - 1]
+            
+            # Only append actual value if prediction was successful
+            actual = row['KTAS_expert']
+            
+            y_true.append(actual)
+            y_pred.append(str(pred_class))
+            probabilities.append(pred_prob)
+            
+        except Exception as e:
+            skipped_count += 1
+            print(f"Error at index {idx}: {e}")
+            print(f"Evidence: {evidence}")
+            continue
+    
+    print(f"\nProcessed {len(y_true)} samples successfully")
+    print(f"Skipped {skipped_count} problematic samples")
     
     # Calculate metrics
     accuracy = accuracy_score(y_true, y_pred)
@@ -101,7 +91,9 @@ def evaluate_model(model, test_data, plot_confusion=True):
         'prediction_confidence': {
             'mean': mean_confidence,
             'std': confidence_std
-        }
+        },
+        'samples_processed': len(y_true),
+        'samples_skipped': skipped_count
     }
     
     # Print summary metrics
@@ -132,38 +124,92 @@ def analyze_errors(model, test_data, metrics):
     
     # Get misclassified cases
     errors = []
+    skipped_count = 0
+    
     for idx, row in test_data.iterrows():
-        actual = row['KTAS_expert']
-        evidence = row.drop('KTAS_expert').to_dict()
-        result = inference.query(variables=['KTAS_expert'], evidence=evidence)
-        pred_class = max(result.values.items(), key=lambda x: x[1])[0]
-        
-        if actual != pred_class:
-            errors.append({
-                'index': idx,
-                'actual': actual,
-                'predicted': pred_class,
-                'confidence': max(result.values.items(), key=lambda x: x[1])[1],
-                'features': evidence
-            })
+        try:
+            # Convert actual to int, as it might be string
+            actual = int(row['KTAS_expert'])
+            evidence = row.drop('KTAS_expert').to_dict()
+            result = inference.query(variables=['KTAS_expert'], evidence=evidence)
+            
+            # Add 1 to pred_class to match KTAS levels (1-5)
+            pred_class = np.argmax(result.values) + 1
+            pred_prob = result.values[pred_class - 1]
+            
+            if actual != pred_class:
+                errors.append({
+                    'index': idx,
+                    'actual': actual,  # This is now guaranteed to be int
+                    'predicted': pred_class,  # This is already int
+                    'confidence': pred_prob,
+                    'features': evidence
+                })
+        except Exception as e:
+            skipped_count += 1
+            print(f"Error at index {idx}: {e}")
+            continue
     
     # Print error analysis
     print("\nError Analysis:")
     print(f"Total errors: {len(errors)}")
+    print(f"Skipped samples: {skipped_count}")
     
-    # Analyze common error patterns
-    error_patterns = {}
-    for error in errors:
-        pattern = (error['actual'], error['predicted'])
-        if pattern not in error_patterns:
-            error_patterns[pattern] = 0
-        error_patterns[pattern] += 1
-    
-    print("\nCommon Error Patterns (actual -> predicted):")
-    for pattern, count in sorted(error_patterns.items(), key=lambda x: x[1], reverse=True):
-        print(f"KTAS {pattern[0]} -> KTAS {pattern[1]}: {count} cases")
+    if errors:  # Only proceed if we have errors to analyze
+        # Analyze common error patterns
+        error_patterns = {}
+        for error in errors:
+            pattern = (error['actual'], error['predicted'])
+            if pattern not in error_patterns:
+                error_patterns[pattern] = 0
+            error_patterns[pattern] += 1
+        
+        print("\nCommon Error Patterns (actual -> predicted):")
+        for pattern, count in sorted(error_patterns.items(), key=lambda x: x[1], reverse=True):
+            print(f"KTAS {pattern[0]} -> KTAS {pattern[1]}: {count} cases")
+            
+        # Calculate error severity (difference between actual and predicted KTAS levels)
+        error_distances = [abs(int(error['actual']) - int(error['predicted'])) for error in errors]
+        avg_error_distance = sum(error_distances) / len(error_distances)
+        print(f"\nAverage KTAS Level Difference in Errors: {avg_error_distance:.2f}")
+        print(f"Maximum KTAS Level Difference: {max(error_distances)}")
+        
+        # Distribution of error magnitudes
+        error_magnitude_dist = {}
+        for dist in error_distances:
+            if dist not in error_magnitude_dist:
+                error_magnitude_dist[dist] = 0
+            error_magnitude_dist[dist] += 1
+            
+        print("\nError Magnitude Distribution:")
+        for magnitude, count in sorted(error_magnitude_dist.items()):
+            print(f"Off by {magnitude} level(s): {count} cases ({count/len(error_distances)*100:.1f}%)")
+    else:
+        print("No errors found in the analyzed samples.")
     
     return errors
+
+def predict_ktas(model, patient_data):
+    """
+    Predict KTAS level for a given patient
+    
+    Parameters:
+    model: Trained BayesianNetwork object
+    patient_data (dict): Dictionary containing patient information
+    
+    Returns:
+    predicted_ktas: Most likely KTAS level
+    probabilities: Probability distribution over KTAS levels
+    """
+    # Create inference object
+    inference = VariableElimination(model)
+    
+    # Predict KTAS
+    result = inference.query(variables=['KTAS_expert'], 
+                           evidence=patient_data)
+    
+    pred_class = np.argmax(result.values) + 1
+    return pred_class, result.values
 
 def main():
     # Load the dataset
@@ -182,7 +228,7 @@ def main():
     print(data.dtypes)
     
     # Split data into train and test sets
-    train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
+    train_data, test_data = train_test_split(data, test_size=0.2)
     
     # Discretize both datasets
     print("\nPreprocessing data...")

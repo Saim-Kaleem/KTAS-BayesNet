@@ -50,12 +50,11 @@ def main():
     print(data.dtypes)
     
     # Split data into train and test sets
-    train_data, test_data = train_test_split(data, test_size=0.2)
+    train_data, _ = train_test_split(data, test_size=0.2)
     
     # Discretize both datasets
     print("\nPreprocessing data...")
     train_data_discrete = discretize_variables(train_data)
-    test_data_discrete = discretize_variables(test_data)
     
     print("\nDiscretized data types:")
     print(train_data_discrete.dtypes)

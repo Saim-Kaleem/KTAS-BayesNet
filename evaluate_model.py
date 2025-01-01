@@ -32,7 +32,7 @@ def evaluate_model(model, test_data):
     Parameters:
     model: Trained BayesianNetwork object
     test_data (pandas.DataFrame): Test dataset
-    
+
     Returns:
     accuracy: Overall prediction accuracy
     """

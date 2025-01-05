@@ -21,7 +21,9 @@ def send_static(path):
         return render_template('index.html')
     else:
         return send_from_directory('static', path)
-
+trained_model = model
+load_cpds(trained_model, "cpds.json")
+print("Model loaded successfully")
 
 @app.route('/api/get_bayes', methods=['POST'])
 def get_bayes():
@@ -29,17 +31,12 @@ def get_bayes():
         data = request.get_json()
 
         # Load the model
-        trained_model = model
-        load_cpds(trained_model, "cpds.json")
-        print("Model loaded successfully")
+        
         
         # Check if model is valid
         if trained_model.check_model():
             print("Model validation passed")
         
-        for cpd in model.get_cpds():
-            print(f"\nCPD for {cpd.variable}:")
-            print(cpd)
         
         # Get prediction
         ktas_prediction, probabilities = predict_ktas(
